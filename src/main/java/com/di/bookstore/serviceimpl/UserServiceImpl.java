@@ -67,7 +67,7 @@ public class UserServiceImpl implements UserService {
 					userdto.getMobile(), bcryptpasswordEncoder.encode(userdto.getPassword()), userdto.getUsername());
 
 			UserModel sendMail = repository.findEmail(userdto.getEmail());
-			String response = "http://192.168.1.24:8080/users/verify/" + tokenGenerator.createToken(sendMail.getId());
+			String response = "http://localhost:8081/user/verify/" + tokenGenerator.createToken(sendMail.getId());
 			mail.sendVerifyMail(sendMail.getEmail(), response);
 
 			return userDetails;
