@@ -26,4 +26,12 @@ public interface BookService {
 
 	public List<BookModel> getAllBooks(String token);
 
+	public List<BookModel> allCartBooks(String token);
+
+	public int updateWishlist(BookDto notedto, String token, long id);
+
+	public List<BookModel> allWishlistBooks(String token);
+
+//	public int upload(MultipartFile file, String token) throws IOException;
+
 }
