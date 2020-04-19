@@ -9,6 +9,15 @@ public class BookDto {
 	private int quantity;
 	private String authorName;
 	private boolean addToBag;
+	private boolean wishlist;
+
+	public boolean isWishlist() {
+		return wishlist;
+	}
+
+	public void setWishlist(boolean wishlist) {
+		this.wishlist = wishlist;
+	}
 
 	public boolean isAddToBag() {
 		return addToBag;
