@@ -25,6 +25,8 @@ import com.di.bookstore.util.Jwt;
  */
 @Service
 public class BookServiceImpl implements BookService {
+	
+//	private byte[] bytes;
 
 	@Autowired
 	private Jwt tokenGenerator;
@@ -49,10 +51,14 @@ public class BookServiceImpl implements BookService {
 		if (user != null) {
 			BookModel book = new BookModel(bookdto.getBookName(), bookdto.getBookCode(), bookdto.getBookDetails(),
 					bookdto.getPrice(), bookdto.getQuantity(), bookdto.getAuthorName());
+//			book.setPicByte(this.bytes);
 			book.setAddToBag(false);
+			book.setWishlist(false);
 			book.setCreatedBy(user);
 			bookRepository.insertData(book.getBookName(), book.getBookCode(), book.getBookDetails(), book.getPrice(),
 					book.getQuantity(), book.getAuthorName());
+			bookRepository.save(book);
+//			this.bytes = null;
 			return book;
 		}
 		return null;
@@ -79,17 +85,75 @@ public class BookServiceImpl implements BookService {
 	/**
 	 * This function takes note id and authorized token from the user checks for
 	 * user authorization if valid customer then find all the available books which
-	 * are not trashed from database and return it.
+	 * are not deleted from database and return it.
 	 */
 	@Override
 	public List<BookModel> getAllBooks(String token) {
 		long userId = tokenGenerator.parseJwtToken(token);
 		Object isUserAvailable = userRepository.findById(userId);
 		if (isUserAvailable != null) {
-			List<BookModel> books = bookRepository.getAllForUser(userId);
+			List<BookModel> books = bookRepository.getAllForAdmin(userId);
 			return books;
 		}
 		return null;
 	}
+
+	/**
+	 * This function takes note id and authorized token from the user checks for
+	 * user authorization if valid customer then find all the available books
+	 * selected to cart which are not deleted from database and return it.
+	 */
+	@Override
+	public List<BookModel> allCartBooks(String token) {
+		long userId = tokenGenerator.parseJwtToken(token);
+		Object isUserAvailable = userRepository.findById(userId);
+		if (isUserAvailable != null) {
+			List<BookModel> books = bookRepository.getCartBooks(userId);
+			return books;
+		}
+		return null;
+	}
+
+	@Override
+	public int updateWishlist(BookDto notedto, String token, long id) {
+		long userid = tokenGenerator.parseJwtToken(token);
+		Optional<UserModel> user = userRepository.findById(userid);
+		if (user != null) {
+			BookModel book = bookRepository.findById(id);
+			if (book.isWishlist()) {
+				bookRepository.setWishlist(false, userid, id);
+				return 1;
+			} else if (!book.isWishlist()) {
+				bookRepository.setWishlist(false, userid, id);
+				bookRepository.setWishlist(true, userid, id);
+				return 0;
+			} else {
+				return -1;
+			}
+		}
+		return -1;
+	}
+
+	@Override
+	public List<BookModel> allWishlistBooks(String token) {
+		long userId = tokenGenerator.parseJwtToken(token);
+		Object isUserAvailable = userRepository.findById(userId);
+		if (isUserAvailable != null) {
+			List<BookModel> books = bookRepository.getWishlistBooks(userId);
+			return books;
+		}
+		return null;
+	}
+
+//	@Override
+//	public int upload(MultipartFile file, String token) throws IOException {
+//		long userId = tokenGenerator.parseJwtToken(token);
+//		Object isUserAvailable = userRepository.findById(userId);
+//		if (isUserAvailable != null) {
+//			this.bytes = file.getBytes();
+//			return 1;
+//		}
+//		return 0;
+//	}
 
 }
