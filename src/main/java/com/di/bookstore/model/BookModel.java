@@ -40,40 +40,31 @@ public class BookModel {
 	@Column
 	@NotNull
 	private String authorName;
-	
-	@ManyToOne
-	@JoinColumn(name = "userId")
-	private UserModel createdBy;
 
-	public UserModel getCreatedBy() {
-		return createdBy;
-	}
-
-	public void setCreatedBy(UserModel createdBy) {
-		this.createdBy = createdBy;
-	}
+	@NotNull
+	@Column(columnDefinition = "boolean default false")
+	private boolean wishlist;
 
 	@NotNull
 	@Column(columnDefinition = "boolean default false")
 	private boolean addToBag;
 
-	public boolean isAddToBag() {
-		return addToBag;
-	}
+	@ManyToOne
+	@JoinColumn(name = "userId")
+	private UserModel createdBy;
+	
+//	@Column(name = "picByte", length = 999999999)
+//	private byte[] picByte;
+//
+//	public byte[] getPicByte() {
+//		return picByte;
+//	}
+//
+//	public void setPicByte(byte[] picByte) {
+//		this.picByte = picByte;
+//	}
 
-	public void setAddToBag(boolean addToBag) {
-		this.addToBag = addToBag;
-	}
-
-	public void setPrice(double price) {
-		this.price = price;
-	}
-
-	public BookModel() {
-
-	}
-
-	public BookModel(@NotNull String bookName, String bookCode, @NotNull String bookDetails, @NotNull Double price,
+	public BookModel(@NotNull String bookName, String bookCode, @NotNull String bookDetails, @NotNull double price,
 			@NotNull int quantity, @NotNull String authorName) {
 		super();
 		this.bookName = bookName;
@@ -82,6 +73,10 @@ public class BookModel {
 		this.price = price;
 		this.quantity = quantity;
 		this.authorName = authorName;
+	}
+
+	public BookModel() {
+		super();
 	}
 
 	public int getBookId() {
@@ -116,11 +111,11 @@ public class BookModel {
 		this.bookDetails = bookDetails;
 	}
 
-	public Double getPrice() {
+	public double getPrice() {
 		return price;
 	}
 
-	public void setPrice(Double price) {
+	public void setPrice(double price) {
 		this.price = price;
 	}
 
@@ -138,6 +133,30 @@ public class BookModel {
 
 	public void setAuthorName(String authorName) {
 		this.authorName = authorName;
+	}
+
+	public boolean isWishlist() {
+		return wishlist;
+	}
+
+	public void setWishlist(boolean wishlist) {
+		this.wishlist = wishlist;
+	}
+
+	public boolean isAddToBag() {
+		return addToBag;
+	}
+
+	public void setAddToBag(boolean addToBag) {
+		this.addToBag = addToBag;
+	}
+
+	public UserModel getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(UserModel createdBy) {
+		this.createdBy = createdBy;
 	}
 
 }
