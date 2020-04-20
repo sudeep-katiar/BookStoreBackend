@@ -19,9 +19,9 @@ public interface BookRepository extends JpaRepository<BookModel, Long> {
 	BookModel findById(long id);
 
 	@Modifying
-	@Query(value = "insert into book_detail (book_name, book_code, book_details, price, quantity, author_name) values (:bookName, :bookCode, :bookDetails, :price, :quantity, :authorName)", nativeQuery = true)
+	@Query(value = "insert into book_detail (book_name, book_code, book_details, price, quantity, author_name, user_id) values (:bookName, :bookCode, :bookDetails, :price, :quantity, :authorName, :id)", nativeQuery = true)
 	void insertData(String bookName, String bookCode, String bookDetails, double price, int quantity,
-			String authorName);
+			String authorName, long id);
 
 	@Modifying
 	@Query(value = "update book_detail set add_to_bag = :b where user_id = :userid AND id = :id", nativeQuery = true)
