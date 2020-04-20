@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.di.bookstore.dto.BookDto;
@@ -63,11 +64,11 @@ public class BookController {
 	/*
 	 * API to add book to cart
 	 */
-	@PostMapping("/addToBag/{id}")
+	@PostMapping("/addToBag")
 	@ApiOperation(value = "Api to add a book to cart for BookStore", response = Response.class)
-	public ResponseEntity<Response> addcart(@RequestBody BookDto notedto, @RequestHeader("token") String token,
-			@PathVariable("id") long id) {
-		int result = bookservice.updateCart(notedto, token, id);
+	public ResponseEntity<Response> addcart(@RequestBody BookDto bookdto, @RequestHeader("token") String token,
+			@RequestParam("id") long id) {
+		int result = bookservice.updateCart(bookdto, token, id);
 		if (result == 1) {
 			return ResponseEntity.status(HttpStatus.OK).body(new Response("successfully removed from cart", 200));
 		} else if (result == 0) {
@@ -83,8 +84,8 @@ public class BookController {
 	@PostMapping("/allbooks")
 	@ApiOperation(value = "Api to get all book for BookStore", response = Response.class)
 	public ResponseEntity<Response> getAllBooks(@RequestHeader("token") String token) {
-		List<BookModel> notesList = bookservice.getAllBooks(token);
-		return ResponseEntity.status(HttpStatus.OK).body(new Response(200, "all books of user", notesList));
+		List<BookModel> booksList = bookservice.getAllBooks(token);
+		return ResponseEntity.status(HttpStatus.OK).body(new Response(200, "all books of user", booksList));
 	}
 
 	/*
