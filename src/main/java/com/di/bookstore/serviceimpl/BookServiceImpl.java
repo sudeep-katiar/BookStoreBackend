@@ -55,8 +55,8 @@ public class BookServiceImpl implements BookService {
 			book.setAddToBag(false);
 			book.setWishlist(false);
 			book.setCreatedBy(user);
-			bookRepository.insertData(book.getBookName(), book.getBookCode(), book.getBookDetails(), book.getPrice(),
-					book.getQuantity(), book.getAuthorName());
+//			bookRepository.insertData(book.getBookName(), book.getBookCode(), book.getBookDetails(), book.getPrice(),
+//					book.getQuantity(), book.getAuthorName(), book.getCreatedBy().getId());
 			bookRepository.save(book);
 //			this.bytes = null;
 			return book;
