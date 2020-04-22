@@ -1,8 +1,10 @@
 package com.di.bookstore.service;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.di.bookstore.dto.BookDto;
 import com.di.bookstore.model.BookModel;
@@ -22,16 +24,16 @@ public interface BookService {
 
 	public BookModel addBook(BookDto bookdto, String token);
 
-	public int updateCart(BookDto notedto, String token, long id);
+	public int updateCart(BookDto notedto, String token, int id);
 
 	public List<BookModel> getAllBooks(String token);
 
 	public List<BookModel> allCartBooks(String token);
 
-	public int updateWishlist(BookDto notedto, String token, long id);
+	public int updateWishlist(BookDto notedto, String token, int id);
 
 	public List<BookModel> allWishlistBooks(String token);
 
-//	public int upload(MultipartFile file, String token) throws IOException;
+	public int upload(MultipartFile file, String token, int id) throws IOException;
 
 }
