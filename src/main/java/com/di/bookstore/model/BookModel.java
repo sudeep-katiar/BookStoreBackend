@@ -53,16 +53,16 @@ public class BookModel {
 	@JoinColumn(name = "userId")
 	private UserModel createdBy;
 	
-//	@Column(name = "picByte", length = 999999999)
-//	private byte[] picByte;
-//
-//	public byte[] getPicByte() {
-//		return picByte;
-//	}
-//
-//	public void setPicByte(byte[] picByte) {
-//		this.picByte = picByte;
-//	}
+	@NotNull
+	private String filepath;
+
+	public String getFilepath() {
+		return filepath;
+	}
+
+	public void setFilepath(String filepath) {
+		this.filepath = filepath;
+	}
 
 	public BookModel(@NotNull String bookName, String bookCode, @NotNull String bookDetails, @NotNull double price,
 			@NotNull int quantity, @NotNull String authorName) {
