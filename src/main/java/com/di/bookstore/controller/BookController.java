@@ -1,5 +1,6 @@
 package com.di.bookstore.controller;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.di.bookstore.dto.BookDto;
 import com.di.bookstore.model.BookModel;
@@ -51,15 +53,15 @@ public class BookController {
 
 	}
 	
-//	@PostMapping("/upload")
-//	public ResponseEntity<Response> uploadImage(@RequestParam("imageFile") MultipartFile file, @RequestHeader("token") String token) throws IOException {
-//		
-//		int book = bookservice.upload(file, token);
-//		if(book == 1) {
-//			return ResponseEntity.status(HttpStatus.OK).body(new Response("Image is successfully uploaded", 200));
-//		}
-//		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response("Image is not uploaded", 400));
-//	}
+	@PostMapping("/upload/{id}")
+	public ResponseEntity<Response> uploadImage(@RequestParam("imageFile") MultipartFile file, @RequestHeader("token") String token, @PathVariable("id") int id ) throws IOException {
+		
+		int book = bookservice.upload(file, token, id);
+		if(book == 1) {
+			return ResponseEntity.status(HttpStatus.OK).body(new Response("Image is successfully uploaded", 200));
+		}
+		return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new Response("Image is not uploaded", 400));
+	}
 
 	/*
 	 * API to add book to cart
@@ -67,7 +69,7 @@ public class BookController {
 	@PostMapping("/addToBag")
 	@ApiOperation(value = "Api to add a book to cart for BookStore", response = Response.class)
 	public ResponseEntity<Response> addcart(@RequestBody BookDto bookdto, @RequestHeader("token") String token,
-			@RequestParam("id") long id) {
+			@RequestParam("id") int id) {
 		int result = bookservice.updateCart(bookdto, token, id);
 		if (result == 1) {
 			return ResponseEntity.status(HttpStatus.OK).body(new Response("successfully removed from cart", 200));
@@ -104,7 +106,7 @@ public class BookController {
 	@PostMapping("/wishlist/{id}")
 	@ApiOperation(value = "Api to add a book to wishlist for BookStore", response = Response.class)
 	public ResponseEntity<Response> wishlist(@RequestBody BookDto notedto, @RequestHeader("token") String token,
-			@PathVariable("id") long id) {
+			@PathVariable("id") int id) {
 		int result = bookservice.updateWishlist(notedto, token, id);
 		if (result == 1) {
 			return ResponseEntity.status(HttpStatus.OK).body(new Response("successfully removed from cart", 200));
