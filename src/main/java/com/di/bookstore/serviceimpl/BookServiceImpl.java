@@ -70,7 +70,7 @@ public class BookServiceImpl implements BookService {
 	}
 
 	@Override
-	public int updateCart(BookDto notedto, String token, int id) {
+	public int updateCart(String token, int id) {
 		long userid = tokenGenerator.parseJwtToken(token);
 		Optional<UserModel> user = userRepository.findById(userid);
 		if (user != null) {
