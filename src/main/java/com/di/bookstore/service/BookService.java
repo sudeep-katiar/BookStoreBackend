@@ -24,7 +24,7 @@ public interface BookService {
 
 	public BookModel addBook(BookDto bookdto, String token);
 
-	public int updateCart(BookDto notedto, String token, int id);
+	public int updateCart(String token, int id);
 
 	public List<BookModel> getAllBooks(String token);
 
