@@ -68,9 +68,8 @@ public class BookController {
 	 */
 	@PostMapping("/addToBag")
 	@ApiOperation(value = "Api to add a book to cart for BookStore", response = Response.class)
-	public ResponseEntity<Response> addcart(@RequestBody BookDto bookdto, @RequestHeader("token") String token,
-			@RequestParam("id") int id) {
-		int result = bookservice.updateCart(bookdto, token, id);
+	public ResponseEntity<Response> addcart(@RequestHeader("token") String token, @RequestParam("id") int id) {
+		int result = bookservice.updateCart(token, id);
 		if (result == 1) {
 			return ResponseEntity.status(HttpStatus.OK).body(new Response("successfully removed from cart", 200));
 		} else if (result == 0) {
