@@ -26,5 +26,18 @@ public class EmailVerify {
 
 		mailsender.send(mail);
 	}
+	
+	public void orderMail(String email) throws MailException {
+		log.info("order confirmation mail");
+		SimpleMailMessage mail = new SimpleMailMessage();
+		mail.setFrom("sudeepkatiar@gmail.com");
+		mail.setTo(email);
+		mail.setSubject("Order Confirmation Mail");
+		mail.setText("Your Order with selected items has been Confirmed."
+				+ " The order will be deliverd within 7 to 10 working days."
+				+ " Thank you Please come again.");
+		
+		mailsender.send(mail);
+	}
 
 }
