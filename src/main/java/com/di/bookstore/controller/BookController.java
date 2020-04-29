@@ -49,7 +49,7 @@ public class BookController {
 
 		BookModel book = bookservice.addBook(bookdto, token);
 		
-		return ResponseEntity.status(HttpStatus.OK).body(new Response(200, "Note is created successfully", book));
+		return ResponseEntity.status(HttpStatus.OK).body(new Response(200, "Book is created successfully", book));
 
 	}
 	
